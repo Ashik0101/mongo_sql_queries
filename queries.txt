@@ -1,0 +1,185 @@
+
+**********************************
+NOTE : (*) defines SQL query
+       <#> defines mongoDB query
+**********************************
+
+(1) Problem: Create a Customers table / collection with the following fields: id (unique identifier), name, email, address, and phone_number
+
+(*)
+create table Customers(
+          id int primary key,
+          name varchar(200) not null,
+          email varchar(200) not null,
+          address varchar(200) not null,
+          phone_number varchar(20) not null,
+)
+
+ <#> mydb.createCollection("customers")
+
+(2) Problem: Insert five rows / documents into the   Customers table / collection with data of your choice.
+
+(*)
+insert into Customers(id,name,email,address,phone_number)
+VALUES 
+(1,'ashik ansari','123@gmail.com','ranchi',"1234566677"),
+(2,'aslam ansari','123@exampl.e.com','giridih',"1234566677"),
+(3,'rohan','1234@gmail.com','ranchi',"253698711"),
+(4,'sohan','sohan@exampl.e.com','giridih',"1234566677"),
+(5,'mohan','mohan@gmail.com','ranchi',"1234566677"),
+(6,'ronan','ronan@example.com','giridih',"8524255588");
+
+<#>
+mydb.customers.insertMany([
+  {
+    name: 'John Smith',
+    email: 'john.smith@example.com',
+    address: '123 Main Street',
+    phone_number: '555-1234'
+  },
+  {
+    name: 'Jane Doe',
+    email: 'jane.doe@example.com',
+    address: '456 Elm Avenue',
+    phone_number: '555-5678'
+  },
+  {
+    name: 'Michael Johnson',
+    email: 'michael.johnson@example.com',
+    address: '789 Oak Road',
+    phone_number: '555-9012'
+  },
+  {
+    name: 'Emily Williams',
+    email: 'emily.williams@example.com',
+    address: '321 Pine Lane',
+    phone_number: '555-3456'
+  },
+  {
+    name: 'Robert Brown',
+    email: 'robert.brown@example.com',
+    address: '654 Cedar Court',
+    phone_number: '555-7890'
+  },
+  {
+    name: 'Sarah Davis',
+    email: 'sarah.davis@example.com',
+    address: '987 Birch Avenue',
+    phone_number: '555-2345'
+  },
+  {
+    name: 'Daniel Taylor',
+    email: 'daniel.taylor@example.com',
+    address: '159 Maple Street',
+    phone_number: '555-6789'
+  },
+  {
+    name: 'Olivia Wilson',
+    email: 'olivia.wilson@example.com',
+    address: '852 Elm Avenue',
+    phone_number: '555-0123'
+  },
+  {
+    name: 'James Martinez',
+    email: 'james.martinez@example.com',
+    address: '753 Oak Road',
+    phone_number: '555-4567'
+  },
+  {
+    name: 'Sophia Anderson',
+    email: 'sophia.anderson@example.com',
+    address: '246 Pine Lane',
+    phone_number: '555-8901'
+  }
+])
+
+(3)Problem: Write a query to fetch all data from the Customers table / collection.
+
+ (*) select * from customers
+
+ <#> db.customers.find()
+
+
+(4) Problem: Write a query to select only the name and email fields for all customers.
+
+ (*) select name,email from customers
+
+ <#> db.customers.find({},{name:1,email:1})
+
+
+(5) Write a query to fetch the customer with the id of 3.
+
+ (*) select * from customers where id = 3
+ 
+ <#> db.customers.find({_id: 3})
+
+
+(6) Write a query to fetch all customers whose name starts with 'A'.
+
+ (*) select * from customers where name like "a%"
+
+ <#> db.customers.find({name:{$regex:"^A",$options:"i"}})
+
+
+(7)Write a query to fetch all customers, ordered by `name` in descending order.
+
+ (*) select * from customers order by name desc;
+
+ <#> db.customers.find().sort({name:-1})
+
+(8) Problem: Write a query to update the address of the customer with id 4.
+ 
+ (*) update customers set address = "bihar" where id = 4
+
+ <#> db.customers.updateOne({_id: 4},{$set:{address:"bihar"}})
+
+
+
+(9)Problem: Write a query to fetch the top 3 customers when ordered by id in ascending order.
+
+ (*) select * from customers order by id asc limit 3;
+
+  <#> db.customers.find().sort({id:-1}).limit(3)
+
+
+(10)Problem: Write a query to delete the customer with id 2.
+
+ (*) delete from customers where id = 2
+
+ <#> db.customers.deleteOne({id:2})
+
+
+(11)Problem: Write a query to count the number of customers.
+
+ (*) select count(*) as total_customers from customers
+
+ <#> db.customers.countDocuments()
+
+
+(12)Problem: Write a query to fetch all customers except the first two when ordered by id in ascending order.
+
+ (*) select * from customers order by id asc offset 2
+
+ <#> db.customers.find().sort({id:1}).skip(2)
+
+
+(13) Problem: Write a query to fetch all customers whose id is greater than 2 and name starts with 'B'.
+
+ (*) select * from customers where id > 2 and name like "B%"
+
+ <#> db.customers.find({$and:[{_id:{$gt:2}},{name:{$regex:"^B",$options:"i"}}]})
+
+
+(14) Problem: Write a query to fetch all customers whose id is less than 3 or name ends with 's'.
+
+ (*) select * from customers where id < 3 and name like "%s"
+
+ <#> db.customers.find({$or:[{_id:{$lt:3}},{name:{$regex:"s$",$options:"i"}}]})
+
+
+
+(15) Problem: Write a query to fetch all customers where the phone_number field is not set or is null.
+
+ (*) select * from customers where phone_number is null
+
+ <#> db.customers.find({$or:[{phone_number:null},{phone_number:""}]})
