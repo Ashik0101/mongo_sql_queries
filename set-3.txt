@@ -142,9 +142,9 @@ db.collection.aggregate([
 
 
 31.
-db.collection.find({ $or: [
-  { start_location: { $regex: keyword, $options: 'i' } },
-  { end_location: { $regex: keyword, $options: 'i' } }
+db.collection.find({ $or: [  
+  { start_location: { $regex: "Downtown", $options: 'i' } },
+  { end_location: { $regex: "Downtown", $options: 'i' } }
 ] });
 
 

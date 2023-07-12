@@ -18,7 +18,7 @@
 ])
 
 
-18. db.collection.find().sort({ average_rating: 1 })
+18. db.collection.find().sort({ average_rating: -1 })
 
 19. db.collection.find({$and:[{average_rating:{$gt:4}},{delivery_available:true}]})
 
@@ -26,7 +26,7 @@
 
 21. db.collection.find({delivery_available:true}).count()
 
-22. db.collection.find({location:{$regex:"^New York",$options:"i"}})
+22. db.collection.find({location:{$regex:"New York",$options:"i"}})
 
 23 db.collection.aggregate([{$group:{_id:null,average:{$avg:"$average_rating"}}},{$project:{_id:0,average:1}}])
 
