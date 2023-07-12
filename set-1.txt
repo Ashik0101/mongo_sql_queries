@@ -8,11 +8,11 @@ NOTE : (*) defines SQL query
 
 (*)
 create table Customers(
-          id int primary key,
-          name varchar(200) not null,
-          email varchar(200) not null,
-          address varchar(200) not null,
-          phone_number varchar(20) not null,
+  id int primary key,
+  name varchar(200) not null,
+  email varchar(200) not null,
+  address varchar(200) not null,
+  phone_number varchar(20) not null,
 )
 
  <#> mydb.createCollection("customers")

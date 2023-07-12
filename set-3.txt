@@ -1,0 +1,168 @@
+26. db.createCollection('rides')
+
+27. db.collection.insertMany([
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9a1"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9a2"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9a3"),
+    "start_location": "New York",
+    "end_location": "Chicago",
+    "distance": 800,
+    "ride_time": 3600,
+    "fare": 50
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9a4"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9a5"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9a6"),
+    "start_location": "San Francisco",
+    "end_location": "Los Angeles",
+    "distance": 400,
+    "ride_time": 1800,
+    "fare": 30
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9a7"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9a8"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9a9"),
+    "start_location": "London",
+    "end_location": "Paris",
+    "distance": 350,
+    "ride_time": 2400,
+    "fare": 45
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9aa"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9ab"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9ac"),
+    "start_location": "Sydney",
+    "end_location": "Melbourne",
+    "distance": 900,
+    "ride_time": 4800,
+    "fare": 75
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9ad"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9ae"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9af"),
+    "start_location": "Tokyo",
+    "end_location": "Osaka",
+    "distance": 500,
+    "ride_time": 3000,
+    "fare": 55
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9b0"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9b1"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9b2"),
+    "start_location": "Berlin",
+    "end_location": "Munich",
+    "distance": 600,
+    "ride_time": 3600,
+    "fare": 40
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9b3"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9b4"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9b5"),
+    "start_location": "Toronto",
+    "end_location": "Montreal",
+    "distance": 550,
+    "ride_time": 2700,
+    "fare": 35
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9b6"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9b7"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9b8"),
+    "start_location": "Madrid",
+    "end_location": "Barcelona",
+    "distance": 400,
+    "ride_time": 2100,
+    "fare": 30
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9b9"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9ba"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9bb"),
+    "start_location": "Seoul",
+    "end_location": "Busan",
+    "distance": 350,
+    "ride_time": 2400,
+    "fare": 45
+  },
+  {
+    "_id": ObjectId("60e9c07d7b92090001d6d9bc"),
+    "driver_id": ObjectId("60e9c07d7b92090001d6d9bd"),
+    "passenger_id": ObjectId("60e9c07d7b92090001d6d9be"),
+    "start_location": "Rio de Janeiro",
+    "end_location": "Sao Paulo",
+    "distance": 500,
+    "ride_time": 3000,
+    "fare": 55
+  }
+])
+
+28. db.collection.find().sort({fare:-1})
+
+29. 
+db.collection.aggregate([
+  {
+    $group:{
+      _id:null,
+      total_fare:{
+        $sum:"$fare"
+      },
+      total_distance:{
+        $sum:"$distance"
+      }
+    }
+  },{
+    $project:{
+      _id:0
+    }
+  }
+])
+
+
+30. db.collection.aggregate([
+  {
+    $group:{
+      _id:null,
+      average_ride_time:{
+        $avg:"$ride_time"
+      }
+    }
+  },{
+    $project:{
+      _id:0
+    }
+  }
+])
+
+
+31.
+db.collection.find({ $or: [
+  { start_location: { $regex: keyword, $options: 'i' } },
+  { end_location: { $regex: keyword, $options: 'i' } }
+] });
+
+
+32. db.collection.countDocuments({driver_id: ObjectId("60e9c07d7b92090001d6d9bd")})
+
+33. db.collection.updateOne({_id:4},{$set:{fare:5000}})
+
+34.  
+db.collection.aggregate([
+  {
+    $group:{
+      _id:'$driver_id',
+       total_fare: {
+       $sum:"$fare"
+      }
+    }
+  }
+])
+
+35.
+db.collection.deleteOne({_id:4})
